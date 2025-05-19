@@ -13,10 +13,16 @@ class LoginPage{
         cy.get("#login-button").click();
     }
 
+    assertDashBoard(){
+        cy.location("pathname").should("contain", "/inventory.html");
+        cy.get(".app_logo").should('exist').and('have.text',"Swag Labs")
+    }
+
     loginToDashBoard(){
         this.enterUserName(Cypress.env('USER_NAME'));
         this.enterPassword(Cypress.env('PASSWORD'));
         this.clickLoginButton();
+        this.assertDashBoard();
 
     }
 }
