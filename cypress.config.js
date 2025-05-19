@@ -10,7 +10,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
        config.env.BASE_URL = process.env.BASE_URL;
-       config.env.USERNAME = process.env.USERNAME;
+       config.env.USER_NAME = process.env.USER_NAME;
        config.env.PASSWORD = process.env.PASSWORD;
        return config;
     },
