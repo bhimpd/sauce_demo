@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         BASE_URL = 'https://www.saucedemo.com/'
-        USERNAME = 'standard_user'
+        USER_NAME = 'standard_user'
         PASSWORD = 'secret_sauce'
     }
 
