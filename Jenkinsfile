@@ -19,8 +19,9 @@ pipeline {
             steps {
                 echo 'Installing dependencies...'
                 sh 'npm install' 
+            }
         }
-
+        
         stage('Run Tests') {
             steps {
                 echo 'Running Cypress tests...'
