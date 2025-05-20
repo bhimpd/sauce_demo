@@ -21,6 +21,8 @@ describe('Product Info Assertions', () => {
     
       cy.get('[data-test="shopping-cart-badge"]').should('have.text', '1').click();
 
+      cy.url().should("include","/cart.html");
+
     });
   });
   
