@@ -32,7 +32,7 @@ pipeline {
                 echo 'Running Cypress tests...'
                 sh """
                     npx cypress run \
-                    --env BASE_URL=https://www.saucedemo.com/,USERNAME=$env.SAUCE_CREDS_USR,PASSWORD=$env.SAUCE_CREDS_PSW
+                    --env BASE_URL=https://www.saucedemo.com/,USER_NAME=$env.SAUCE_CREDS_USR,PASSWORD=$env.SAUCE_CREDS_PSW
                 """
             }
         }
