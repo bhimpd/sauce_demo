@@ -13,6 +13,16 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                echo 'Running Cypress tests...'
+                sh """
+                    npx cypress run \
+                    --env BASE_URL=https://www.saucedemo.com/,USERNAME=$SAUCE_CREDS_USR,PASSWORD=$SAUCE_CREDS_PSW
+                """
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
