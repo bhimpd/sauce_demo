@@ -8,11 +8,11 @@ pipeline {
     stages {
         stage('Print Credentials') {
             steps {
-                echo "Username: ${env.SAUCE_CREDS_USR}"
-                echo "Password: ${env.SAUCE_CREDS_PSW}"
+                echo "Username: $env.SAUCE_CREDS_USR"
+                echo "Password: $env.SAUCE_CREDS_PSW"
             }
         }
-        
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
