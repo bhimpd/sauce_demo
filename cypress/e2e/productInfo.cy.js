@@ -1,4 +1,5 @@
 import LoginPage from '../support/PageObject/Login/LoginPage';
+import ProductInfo from '../support/PageObject/ProductInfo/ProductInfo';
 
 describe('Product Info Assertions', () => {
   beforeEach(() => {
@@ -10,11 +11,16 @@ describe('Product Info Assertions', () => {
   it('should assert product info matches JSON', () => {
     cy.fixture('productInfo').then((data) => {
       cy.get('.inventory_item').eq(0).within(() => {
-        cy.get('.inventory_item_name').should('have.text', data.name);
-        cy.get('.inventory_item_desc').should('have.text', data.details);
-        cy.get('.inventory_item_price').should('have.text', `$${data.price}`);
-        cy.get('img').should('have.attr', 'src').and('include', data.image);
-      });
+        ProductInfo.assertTitle(data.name);
+        ProductInfo.assertDescription(data.details);
+        ProductInfo.assertPrice(`$${data.price}`);
+        ProductInfo.assertImage(data.image);
+        ProductInfo.clickCart();
+        ProductInfo.assertRemoveText();
+        });
+    
+      cy.get('[data-test="shopping-cart-badge"]').should('have.text', '1').click();
+
     });
   });
   
