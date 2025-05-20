@@ -2,12 +2,17 @@ pipeline {
     agent any
 
     environment {
-        BASE_URL = 'https://www.saucedemo.com/'
-        USER_NAME = 'standard_user'
-        PASSWORD = 'secret_sauce'
+        SAUCE_CREDS = credentials('sauce-credentials')
     }
 
     stages {
+        stage('Print Credentials') {
+            steps {
+                echo "Username: ${env.SAUCE_CREDS_USR}"
+                echo "Password: ${env.SAUCE_CREDS_PSW}"
+            }
+        }
+        
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
@@ -21,7 +26,7 @@ pipeline {
                 sh 'npm install' 
             }
         }
-        
+
         stage('Run Tests') {
             steps {
                 echo 'Running Cypress tests...'
