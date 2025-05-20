@@ -19,10 +19,31 @@ describe('Product Info Assertions', () => {
         ProductInfo.assertRemoveText();
         });
     
-      cy.get('[data-test="shopping-cart-badge"]').should('have.text', '1').click();
+        ProductInfo.assertBadge();
+        cy.url().should("include","/cart.html");
 
-      cy.url().should("include","/cart.html");
+        ProductInfo.assertTitle(data.name);
+        ProductInfo.assertDescription(data.details);
+        ProductInfo.assertPrice(`$${data.price}`);
+        ProductInfo.clickCheckOut()
 
+        cy.url().should("include","/checkout-step-one.html");
+
+        ProductInfo.enterFirstName("victor");
+        ProductInfo.enterLastName("Memo");
+        ProductInfo.enterZipCode("1234");
+        ProductInfo.clickContinue();
+
+        cy.url().should("include","/checkout-step-two.html");
+
+        ProductInfo.assertTitle(data.name);
+        ProductInfo.assertDescription(data.details);
+        ProductInfo.assertPrice(`$${data.price}`);
+        ProductInfo.clickFinish();
+
+        cy.url().should("include","/checkout-complete.html");
+        ProductInfo.assertCompletion();
+        
     });
   });
   
