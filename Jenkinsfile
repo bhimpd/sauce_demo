@@ -71,7 +71,7 @@ pipeline {
             echo 'Pipeline completed successfully!'
             echo 'Attempting to send success email...'
             emailext(
-                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "✅ SUCCESS:: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """<p>Good news! The build succeeded.</p>
                         <p><a href='${env.BUILD_URL}'>View build logs</a></p>""",
                 mimeType: 'text/html',
