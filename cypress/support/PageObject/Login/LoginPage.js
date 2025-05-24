@@ -1,7 +1,6 @@
 class LoginPage{
 
     enterUserName(username){
-        cy.log("USERNAME::", username);
         cy.get("#user-name").type(username);
     }
 

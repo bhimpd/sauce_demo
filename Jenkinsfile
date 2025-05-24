@@ -56,14 +56,35 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
+            echo 'Attempting to send always email...'
+            emailext(
+                subject: "🔔 Build Completed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build has finished (status: ${currentBuild.currentResult}).\nSee ${env.BUILD_URL}",
+                to: 'test@example.com'
+            )
         }
-
         success {
             echo 'Pipeline completed successfully!'
+            echo 'Attempting to send success email...'
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Good news! The build succeeded.</p>
+                        <p><a href='${env.BUILD_URL}'>View build logs</a></p>""",
+                mimeType: 'text/html',
+                to: 'test@example.com'
+            )
         }
-
         failure {
             echo 'Pipeline failed.'
+            echo 'Attempting to send failure email...'
+            emailext(
+                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Oops, the build failed.</p>
+                        <p><a href='${env.BUILD_URL}'>View logs</a></p>""",
+                mimeType: 'text/html',
+                to: 'test@example.com'
+            )
         }
     }
+
 }

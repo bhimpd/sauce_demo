@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import LoginPage from "../support/PageObject/Login/LoginPage";
 
 describe("Login Module", ()=>{
