@@ -12,35 +12,43 @@ describe("Sort the Product Details", ()=>{
         LoginPage.loginToDashBoard();
     });
 
-    it("Should Sort the Product Details In Ascending Order...", () => {
+    it("Should Sort the Product Details In Ascending Order(Name)...", () => {
       
         ProductSort.selectFilter('Name (A to Z)','az');
 
         cy.fixture('productDetails').then((data)=>{
             // console.log("All Products Details Data :: ", data)
             // console.log(data[0].name)
+            const ascending = [...data].sort((a,b) => a.name.localeCompare(b.name));
+            cy.get(".inventory_item").should('have.length', ascending.length);
+
+            cy.log("Ascending Data :: ", ascending);
 
             cy.get(".inventory_item").each(($el, index) => {
 
-                // wrap this single item and scope all get/asserts inside it
                 cy.wrap($el).within(() => {
-                ProductInfo.assertTitle(data[index].name);
-                ProductInfo.assertDescription(data[index].details);
-                ProductInfo.assertPrice(`$${data[index].price}`);
-                ProductInfo.assertImage(data[index].image);
+                const product = ascending[index];
+                ProductInfo.assertTitle(product.name);
+                ProductInfo.assertDescription(product.details);
+                ProductInfo.assertPrice(`$${product.price}`);
+                ProductInfo.assertImage(product.image);
                 });
                 
             });
         })
     });
 
-    it("Should Sort the Product Details In Descending Order...", () => {
+    it("Should Sort the Product Details In Descending Order(Name)...", () => {
         // select Z → A
         ProductSort.selectFilter('Name (Z to A)','za');
     
         cy.fixture('productDetails').then((data) => {
+
+            const ascending = [...data].sort((a,b) => a.name.localeCompare(b.name));
+            cy.get(".inventory_item").should('have.length', ascending.length);
+
           // make a reversed copy of the fixture array
-          const descending = [...data].reverse();
+          const descending = [...ascending].reverse();
     
           cy.get(".inventory_item").each(($el, index) => {
             cy.wrap($el).within(() => {
@@ -52,4 +60,49 @@ describe("Sort the Product Details", ()=>{
           });
         });
     });
+
+    it("Should Sort the Product Details by Price (Low → High)", () => {
+        // select low-to-high price filter (assuming 'lohi' is the value)
+        ProductSort.selectFilter('Price (low to high)','lohi');
+      
+        cy.fixture('productDetails').then((data) => {
+          const lowToHigh = [...data].sort(
+            (a, b) => parseFloat(a.price) - parseFloat(b.price)
+          );
+      
+          cy.get(".inventory_item").should('have.length', lowToHigh.length);
+          cy.get(".inventory_item").each(($el, index) => {
+            cy.wrap($el).within(() => {
+              const product = lowToHigh[index];
+              ProductInfo.assertTitle(product.name);
+              ProductInfo.assertDescription(product.details);
+              ProductInfo.assertPrice(`$${product.price}`);
+              ProductInfo.assertImage(product.image);
+            });
+          });
+        });
+    });
+
+    it("Should Sort the Product Details by Price (High → Low)", () => {
+        // select high-to-low price filter (assuming 'hilo' is the value)
+        ProductSort.selectFilter('Price (high to low)','hilo');
+      
+        cy.fixture('productDetails').then((data) => {
+          const highToLow = [...data].sort(
+            (a, b) => parseFloat(b.price) - parseFloat(a.price)
+          );
+      
+          cy.get(".inventory_item").should('have.length', highToLow.length);
+          cy.get(".inventory_item").each(($el, index) => {
+            cy.wrap($el).within(() => {
+              const product = highToLow[index];
+              ProductInfo.assertTitle(product.name);
+              ProductInfo.assertDescription(product.details);
+              ProductInfo.assertPrice(`$${product.price}`);
+              ProductInfo.assertImage(product.image);
+            });
+          });
+        });
+    });
+    
 });
