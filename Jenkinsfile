@@ -60,6 +60,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up ......'
+            echo "we good till now??"
             echo 'Attempting to send always email...'
             emailext(
                 subject: "🔔 Build Completed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -69,6 +70,7 @@ pipeline {
         }
         success {
             echo 'Pipeline completed successfully!'
+            echo 'Coming successfully or not???'
             echo 'Attempting to send success email...'
             emailext(
                 subject: "✅ SUCCESS:: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
@@ -80,6 +82,7 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed.'
+            echo 'Keep Trying Brother...'
             echo 'Attempting to send failure email...'
             emailext(
                 subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
