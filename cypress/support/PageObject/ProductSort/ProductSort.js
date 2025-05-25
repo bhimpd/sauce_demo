@@ -1,8 +1,10 @@
 class ProductSort
 {
 
-    selectFilter(value){
-        cy.get('select').select('Name (A to Z)').should('have.value', value);
+    selectFilter(order, value){
+        cy.get('select').select(order);
+        cy.get('select').should('have.value', value);
+
     }
 
 }
