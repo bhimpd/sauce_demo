@@ -59,7 +59,7 @@ pipeline {
 
     post {
         always {
-            echo 'Cleaning up...'
+            echo 'Cleaning up ......'
             echo 'Attempting to send always email...'
             emailext(
                 subject: "🔔 Build Completed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
