@@ -8,7 +8,40 @@ describe('Product Info Assertions', () => {
   });
 
 
-  it('should assert product info matches JSON', () => {
+  it.only("should assert every product detail page", () => {
+    cy.fixture('productDetails').then((data) => {
+      
+      const ascending = [...data].sort((a, b) => a.name.localeCompare(b.name));
+      cy.get('.inventory_item').should('have.length', ascending.length);
+  
+      // forEach builds a proper Cypress chain
+      ascending.forEach((product, index) => {
+        // 1) On listing page: scope into the i-th card
+        cy.get('.inventory_item').eq(index).within(() => {
+          ProductInfo.assertTitle(product.name);
+          ProductInfo.assertDescription(product.details);
+          ProductInfo.assertPrice(`$${product.price}`);
+          ProductInfo.assertImage(product.image);
+  
+          // 2) Click through to details
+          cy.get('.inventory_item_name').click();
+        });
+  
+        // 3) On detail page: assert again
+        ProductInfo.assertDetailTitle(product.name);
+        ProductInfo.assertDetailDescription(product.details);
+        ProductInfo.assertDetailPrice(`$${product.price}`);
+        ProductInfo.assertDetailImage(product.image)
+      
+  
+        // 4) Go back to listing
+        cy.go('back');
+      });
+    });
+  });
+  
+
+  it('should assert product info matches JSON and full checkout process', () => {
     cy.fixture('productInfo').then((data) => {
       cy.get('.inventory_item').eq(0).within(() => {
         ProductInfo.assertTitle(data.name);

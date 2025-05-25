@@ -35,7 +35,7 @@ describe("Sort the Product Details", ()=>{
                 });
                 
             });
-        })
+        });
     });
 
     it("Should Sort the Product Details In Descending Order(Name)...", () => {

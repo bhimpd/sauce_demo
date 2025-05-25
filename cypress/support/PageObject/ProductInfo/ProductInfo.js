@@ -3,7 +3,26 @@ class ProductInfo {
     assertTitle(title) {
       cy.get('.inventory_item_name ').should('have.text', title);
     }
+
+    clickTitle() {
+        cy.get('.inventory_item_name ').click();
+      }
   
+    assertDetailTitle(title){
+        cy.get('.inventory_details_name').should('have.text',title)
+    }
+
+    assertDetailDescription(details){
+        cy.get('.inventory_details_desc').should('have.text',details)
+    }
+
+    assertDetailPrice(price){
+        cy.get('.inventory_details_price').should('have.text',price)
+    }
+
+    assertDetailImage(imagePath){
+        cy.get('img.inventory_details_img').should('have.attr', 'src').and('include', imagePath);
+    }
     assertDescription(details) {
       cy.get('.inventory_item_desc').should('have.text', details);
     }
