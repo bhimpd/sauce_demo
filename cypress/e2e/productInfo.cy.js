@@ -8,7 +8,7 @@ describe('Product Info Assertions', () => {
   });
 
 
-  it.only("should assert every product detail page", () => {
+  it("should assert every product detail page", () => {
     cy.fixture('productDetails').then((data) => {
       
       const ascending = [...data].sort((a, b) => a.name.localeCompare(b.name));
